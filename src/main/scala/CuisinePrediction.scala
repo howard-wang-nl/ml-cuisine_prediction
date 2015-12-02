@@ -14,13 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Modified by howard@lunatech.com on Wed Dec 2 07:41:37 CET 2015 for MLX
+ * Modified by howard@lunatech.com Dec 2015 for MLX
  */
 
 // scalastyle:off println
 package nl.ing.mlx
-
-import com.google.inject.internal.util.$CustomConcurrentHashMap.Strategy
 
 import scala.language.reflectiveCalls
 
@@ -31,11 +29,10 @@ import org.apache.spark.mllib.evaluation.MulticlassMetrics
 import org.apache.spark.mllib.linalg.Vector
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.mllib.tree.{DecisionTree, RandomForest, impurity}
-import org.apache.spark.mllib.tree.configuration.Algo
+import org.apache.spark.mllib.tree.configuration.{Algo, Strategy}
 import org.apache.spark.mllib.tree.configuration.Algo._
 import org.apache.spark.mllib.util.MLUtils
 import org.apache.spark.rdd.RDD
-import org.apache.spark.util.Utils
 import org.json4s.DefaultFormats
 
 /**
@@ -259,7 +256,7 @@ object CuisinePrediction {
 
   def run(params: Params) {
 
-    val conf = new SparkConf().setAppName(s"CuisinePrediction with $params")
+    val conf = new SparkConf().setAppName(s"CuisinePrediction with $params").setMaster("local")
     val sc = new SparkContext(conf)
 
     println(s"CuisinePrediction with parameters:\n$params")
@@ -313,7 +310,7 @@ object CuisinePrediction {
         println(s"Test mean squared error = $testMSE")
       }
     } else {
-      val randomSeed = Utils.random.nextInt()
+      val randomSeed = (new java.util.Random).nextInt()
       if (params.algo == Classification) {
         val startTime = System.nanoTime()
         val model = RandomForest.trainClassifier(training, strategy, params.numTrees,
