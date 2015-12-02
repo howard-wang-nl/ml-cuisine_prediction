@@ -164,6 +164,11 @@ object CuisinePrediction {
    * @param fracTest  Fraction of input data to hold out for testing.  Ignored if testInput given.
    * @return  (training dataset, test dataset, number of classes),
    *          where the number of classes is inferred from data (and set to 0 for Regression)
+   * ```
+   * NOTE: The feature index numbers should be incremental for each sample record and should not contain duplicate
+   *       features with same index numbers, otherwise exception will be raised with error message:
+   *         requirement failed: indices should be one-based and in ascending order
+   * ```
    */
   private[mlx] def loadDatasets(
                                    sc: SparkContext,
@@ -370,20 +375,3 @@ object CuisinePrediction {
 }
 // scalastyle:on println
 
-/*
-object CuisinePrediction {
-  implicit val formats = DefaultFormats
-
-  def main(args: Array[String]) {
-    val conf = new SparkConf().setAppName("CuisinePrediction").setMaster("local[4]")
-    val sc = new SparkContext(conf)
-    val inputPath = "/Users/hwang/IdeaProjects/ml-cuisine_prediction/data"
-    val trainFile = "train.json"
-    val testFile = "test.json"
-
-    val RDDTrain = sc.textFile(s"$inputPath/$trainFile")
-    val eventType = textFile.map(_.filter(line => line.contains("PushEvent")))
-    println(eventType.map(_.count()).reduce(_ + _))
-  }
-}
-*/
