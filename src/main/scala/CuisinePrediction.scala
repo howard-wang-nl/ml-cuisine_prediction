@@ -261,7 +261,7 @@ object CuisinePrediction {
 
   def run(params: Params) {
 
-    val conf = new SparkConf().setAppName(s"CuisinePrediction with $params").setMaster("local")
+    val conf = new SparkConf().setAppName(s"CuisinePrediction with $params").setMaster("local[*]")
     val sc = new SparkContext(conf)
 
     println(s"CuisinePrediction with parameters:\n$params")
