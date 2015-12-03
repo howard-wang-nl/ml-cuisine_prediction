@@ -1,4 +1,5 @@
 # ml-cuisine_prediction
+Test of Spark MLLib
 
 # Running the cuisine prediction 
 - Make sure that $SPARK_HOME/bin is in your path. If not add it :
@@ -6,6 +7,10 @@
 # Create local variable SPARK_HOME and add bin folder to PATH
 export SPARK_HOME = /path/to/spark
 export PATH = $SPARK_HOME/bin:$PATH
+
+Run in local mode to test:
+./run.sh
+
 ```
 - Step into the project directory
 - Start sbt, run the assembly target

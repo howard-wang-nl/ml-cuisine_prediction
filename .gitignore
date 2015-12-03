@@ -1,5 +1,4 @@
-#*
-class
+*.class
 *.log
 
 # sbt specific
@@ -17,8 +16,6 @@ project/plugins/project/
 .scala_dependencies
 .worksheet
 .idea
-
 .checkpoint*
 checkpoint*
 receivedBlockMetadata/
-
