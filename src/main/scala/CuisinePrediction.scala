@@ -265,6 +265,8 @@ object CuisinePrediction {
     val sc = new SparkContext(conf)
 
     println(s"CuisinePrediction with parameters:\n$params")
+    val p = new java.io.File(".").getAbsoluteFile()
+    println(s"Current working directory: $p")
 
     // Load training and test data and cache it.
     val (training, test, numClasses) = loadDatasets(sc, params.input, params.dataFormat,
