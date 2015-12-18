@@ -1,11 +1,13 @@
 spark-submit \
     --master yarn-cluster \
     --num-executors 3 \
-    --executor-cores 1 \
-    --driver-memory 1g \
-    --executor-memory 1g \
     ml-cuisine-prediction-assembly-0.1.0.jar \
     --maxDepth 10 --numTrees 10 --maxBins 4 /data/train.libsvm.txt
+
+# Some other spark-submit options
+#    --executor-cores 1 \
+#    --driver-memory 1g \
+#    --executor-memory 1g \
 
 # cuisine lists in train.libsvm.txt
 # 20 categories ( countries )

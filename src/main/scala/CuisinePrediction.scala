@@ -261,7 +261,9 @@ object CuisinePrediction {
 
   def run(params: Params) {
 
-    val conf = new SparkConf(true).setAppName("CuisinePrediction")
+    val defaultConf = new SparkConf(true)
+    val conf = defaultConf.setAppName("CuisinePrediction").setMaster(defaultConf.get("spark.master", "local[*]"))
+      // If Spark master is set through eg. "spark-submit --master <url>", then use it; else set local master to run in standalone mode.
     val sc = new SparkContext(conf)
 
     println(s"CuisinePrediction with parameters:\n$params")
