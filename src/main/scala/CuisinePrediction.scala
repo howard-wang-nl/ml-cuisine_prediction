@@ -180,7 +180,7 @@ object CuisinePrediction {
     // Load training data and cache it.
     val origExamples = dataFormat match {
       case "dense" => MLUtils.loadLabeledPoints(sc, input).cache()
-      case "libsvm" => MLUtils.loadLibSVMFile(sc, input).cache()
+      case "libsvm" => MLUtils.loadLibSVMFile(sc, input)
     }
     // For classification, re-index classes if needed.
     val (examples, classIndexMap, numClasses) = algo match {
@@ -247,8 +247,8 @@ object CuisinePrediction {
       // Split input into training, test.
       examples.randomSplit(Array(1.0 - fracTest, fracTest))
     }
-    val training = splits(0).cache()
-    val test = splits(1).cache()
+    val training = splits(0)
+    val test = splits(1)
 
     val numTraining = training.count()
     val numTest = test.count()
@@ -261,14 +261,14 @@ object CuisinePrediction {
 
   def run(params: Params) {
 
-    val conf = new SparkConf().setAppName(s"CuisinePrediction with $params").setMaster("local[*]")
+    val conf = new SparkConf(true).setAppName("CuisinePrediction")
     val sc = new SparkContext(conf)
 
     println(s"CuisinePrediction with parameters:\n$params")
     val p = new java.io.File(".").getAbsoluteFile()
     println(s"Current working directory: $p")
 
-    // Load training and test data and cache it.
+    // Load training and test data.
     val (training, test, numClasses) = loadDatasets(sc, params.input, params.dataFormat,
       params.testInput, params.algo, params.fracTest)
 
